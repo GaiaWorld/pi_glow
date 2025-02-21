@@ -3962,7 +3962,7 @@ impl HasContext for Context {
                     panic!("Compressed sub image 2D pixel buffer range is not supported");
                 }
                 CompressedPixelUnpackData::Slice(data) => {
-                    let data = texture_data_view(BYTE, data);
+                    let data = texture_data_view(UNSIGNED_BYTE, data);
                     gl.compressed_tex_sub_image_2d_with_array_buffer_view(
                         target, level, x_offset, y_offset, width, height, format, &data,
                     )
@@ -3982,7 +3982,7 @@ impl HasContext for Context {
                         range.start as i32,
                     ),
                 CompressedPixelUnpackData::Slice(data) => {
-                    let data = texture_data_view(BYTE, data);
+                    let data = texture_data_view(UNSIGNED_BYTE, data);
                     gl.compressed_tex_sub_image_2d_with_array_buffer_view(
                         target, level, x_offset, y_offset, width, height, format, &data,
                     )
@@ -4065,8 +4065,8 @@ impl HasContext for Context {
                 panic!("Compressed sub image 3D is not supported");
             }
             RawRenderingContext::WebGl2(ref gl) => match pixels {
-                CompressedPixelUnpackData::BufferRange(range) => gl
-                    .compressed_tex_sub_image_3d_with_i32_and_i32(
+                CompressedPixelUnpackData::BufferRange(range) => {
+                    gl.compressed_tex_sub_image_3d_with_i32_and_i32(
                         target,
                         level,
                         x_offset,
@@ -4078,13 +4078,15 @@ impl HasContext for Context {
                         format,
                         (range.end - range.start) as i32,
                         range.start as i32,
-                    ),
+                    );
+                },
                 CompressedPixelUnpackData::Slice(data) => {
-                    let data = texture_data_view(BYTE, data);
-                    gl.compressed_tex_sub_image_3d_with_array_buffer_view(
+                    let len = data.len() as u32;
+                    let data = texture_data_view(UNSIGNED_BYTE, data);
+                    gl.compressed_tex_sub_image_3d_with_array_buffer_view_and_u32(
                         target, level, x_offset, y_offset, z_offset, width, height, depth, format,
-                        &data,
-                    )
+                        &data, 0
+                    );
                 }
             },
         }
