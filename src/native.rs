@@ -2290,6 +2290,7 @@ impl HasContext for Context {
         height: i32,
         depth: i32,
         format: u32,
+        pixel_size: i32,
         pixels: CompressedPixelUnpackData,
     ) {
         let gl = &self.raw;
@@ -2299,7 +2300,7 @@ impl HasContext for Context {
                 (range.end - range.start) as i32,
             ),
             CompressedPixelUnpackData::Slice(data) => {
-                (data.as_ptr() as *const std::ffi::c_void, data.len() as i32)
+                (data.as_ptr() as *const std::ffi::c_void, pixel_size)
             }
         };
 
