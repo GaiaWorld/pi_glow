@@ -3954,6 +3954,7 @@ impl HasContext for Context {
         width: i32,
         height: i32,
         format: u32,
+        pixels_size: i32,
         pixels: CompressedPixelUnpackData,
     ) {
         match self.raw {
@@ -4058,6 +4059,7 @@ impl HasContext for Context {
         height: i32,
         depth: i32,
         format: u32,
+        pixels_size: i32,
         pixels: CompressedPixelUnpackData,
     ) {
         match self.raw {

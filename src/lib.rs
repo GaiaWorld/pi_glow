@@ -953,6 +953,7 @@ pub trait HasContext {
         width: i32,
         height: i32,
         format: u32,
+        pixels_size: i32,
         pixels: CompressedPixelUnpackData,
     );
 
@@ -997,6 +998,7 @@ pub trait HasContext {
         height: i32,
         depth: i32,
         format: u32,
+        pixels_size: i32,
         pixels: CompressedPixelUnpackData,
     );
 
